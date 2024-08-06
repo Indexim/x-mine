@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
-using Xwatch.Data;
-using Xwatch.Models;
+using X_MINE.Data;
+using X_MINE.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 namespace Xwatch.Controllers

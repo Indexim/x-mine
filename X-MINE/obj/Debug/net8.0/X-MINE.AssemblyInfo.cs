@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("X-MINE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fce6da3e40c873447f29bce4f65f46daaa248c3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e05dc3aceefaff1207e9c045a0025b849d6e832")]
 [assembly: System.Reflection.AssemblyProductAttribute("X-MINE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("X-MINE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
