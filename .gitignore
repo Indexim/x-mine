@@ -1,2 +1,4 @@
 .vs
-X-MINE/bin/debug/*
+\bin
+\obj
+*.csproj.user
