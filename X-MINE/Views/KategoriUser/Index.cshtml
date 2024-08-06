@@ -1,0 +1,251 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css" />
+</head>
+<div style="margin-bottom: 20px;">
+    <button onclick="btnAdd()" class="btn btn-primary btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fa fa-plus"></i>
+        </span>
+        <span class="text">Add Data</span>
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-white">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title">MASTER - @ViewBag.Title</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table id="tableBS" class="display table" style="width: 100%; cellspacing: 0;">
+                        <thead>
+                            <tr>
+                                <th>KATEGORI</th>
+                                <th>PATH LOGIN</th>
+                                <th>AKSI</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add/Update -->
+<div class="modal fade modalBS" tabindex="-1" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">FORM @ViewBag.Title</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formBS" class="forms-sample">
+                    <div class="form-group row">
+                        <label for="nrp" class="col-sm-3 col-form-label">Kategori</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="kategori" name="kategori" placeholder="Masukkan kategori user" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nrp" class="col-sm-3 col-form-label">Path Login</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="login_controller" name="login_controller" placeholder="Controller" required>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="login_function" name="login_function" placeholder="Function" required>
+                        </div>
+                    </div>
+                    <button type="button" id="btnSave" onclick="insertData()" class="btn btn-success mr-2">Save</button>
+                    <button type="button" id="btnUpdate" onclick="updateData()" class="btn btn-success mr-2">Update</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-light">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <!-- JQuery harus dimuat terlebih dahulu -->
+    <script src="~/js/jquery.datatables.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+
+    <script>
+        var link = '@Url.Action("Function", "Controller")'
+        var controller_name = "@ViewBag.Controller"
+        var a
+        var dataTable
+
+        $(document).ready(function () {
+
+            getCredentials()
+            getAll()
+        })
+
+        function btnAdd() {
+            $('#btnSave').show()
+            $('#btnUpdate').hide()
+            $('.modalBS').modal('show');
+            $('#formBS').trigger("reset")
+        }
+
+        function btnEdit(id) {
+            $('#btnSave').hide()
+            $('#btnUpdate').show()
+            $('#formBS').trigger("reset")
+            getData(id)
+            $('.modalBS').modal('show')
+        }
+
+        function getCredentials() {
+            //GetNRP
+            $('#insert_by').val("@Html.Raw(ViewBag.insert_by)")
+        }
+
+        function getAll() {
+            var link = '@Url.Action("GetAll", "KategoriUser")';
+            dataTable = $("#tableBS").DataTable({
+                "ajax": {
+                    "url": link,
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "kategori" },
+                    {
+                        "data": function (data, type, dataToSet) {
+                            return data.login_controller + '/' + data.login_function
+                        }
+                    },
+                    {
+                        "data": "id", "render": function (data) {
+                            var a = '<button onclick="btnEdit(' + data + ')" class="btn btn-info btn-circle btn-sm">'
+                            a += '  <i class="fa fa-edit"></i>'
+                            a += '</button>'
+                            a += '<button onclick="deleteData(' + data + ')" class="btn btn-danger btn-circle btn-sm" style="margin-left: 5px;">'
+                            a += '  <i class="fa fa-trash"></i>'
+                            a += '</button>'
+                            return a
+                        },
+                        "orderable": false,
+                        "width": "180px",
+                        "searchable": false
+                    }
+                ],
+                "language": {
+                    "emptyTable": "Tidak ada data"
+                }
+            })
+            link = '@Url.Action("Function", "Controller")'
+        }
+
+        function getData(id) {
+            var link = '@Url.Action("Get", "KategoriUser")';
+
+            $.ajax({
+                type: "GET",
+                url: link + '/' + id,
+                success: function (data) {
+                    if (data.success) { 
+                        $('#id').val(data.data.id);
+                        $('#kategori').val(data.data.kategori);
+                        $('#login_controller').val(data.data.login_controller);
+                        $('#login_function').val(data.data.login_function);
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Terjadi kesalahan: ' + error);
+                }
+            });
+        }
+
+
+        function insertData() {
+            var link = '@Url.Action("Insert", "KategoriUser")';
+
+            $.ajax({
+                type: "POST",
+                url: link,
+                data: $('#formBS').serialize(),
+                success: function (data) {
+                    if (data.success) { 
+                        $('.modalBS').modal('hide');
+                        dataTable.ajax.reload();
+                        alertify.notify('Data berhasil disimpan', 'success', 5);
+                    } else {
+                        alert(data.message); 
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Terjadi kesalahan: ' + error);
+                }
+            });
+        }
+
+
+        function updateData(id) {
+            var link = '@Url.Action("Update", "KategoriUser")';
+
+            $.ajax({
+                type: "POST",
+                url: link,
+                data: $('#formBS').serialize(),
+                success: function (data) {
+                    if (data.success) { 
+                        $('.modalBS').modal('hide');
+                        dataTable.ajax.reload();
+                        alertify.notify('Data berhasil diubah', 'success', 5);
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Terjadi kesalahan: ' + error);
+                }
+            });
+        }
+
+
+        function deleteData(id) {
+            var link = '@Url.Action("Delete", "KategoriUser")';
+
+            if (confirm('Are you sure?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: link + '/' + id,
+                    success: function (data) {
+                        if (data.success) { 
+                            dataTable.ajax.reload();
+                            alertify.notify('Data berhasil dihapus', 'success', 5);
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Terjadi kesalahan: ' + error);
+                    }
+                });
+            }
+        }
+
+
+    </script>
+}
+
+

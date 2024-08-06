@@ -1,0 +1,363 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css" />
+</head>
+<div style="margin-bottom: 20px;">
+    <button onclick="btnAdd()" class="btn btn-primary btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fa fa-plus"></i>
+        </span>
+        <span class="text">Add Data</span>
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-white">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title">MASTER - @ViewBag.Title</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table id="tableBS" class="display table" style="width: 100%; cellspacing: 0;">
+                        <thead>
+                            <tr>
+                                <th>TITLE</th>
+                                <th>KATEGORI USER</th>
+                                <th>TYPE</th>
+                                <th>LINK</th>
+                                <th>HIDDEN</th>
+                                <th>NEW TAB</th>
+                                <th>AKSI</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add/Update -->
+<div class="modal fade modalBS" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">FORM @ViewBag.Title</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formBS" class="forms-sample">
+                    <div class="form-group row">
+                        <label for="nrp" class="col-sm-3 col-form-label">Title</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Masukkan title" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nrp" class="col-sm-3 col-form-label">Kategori User</label>
+                        <div class="col-sm-9">
+                            <select class="form-control form-control-md" id="kategori_user_id" name="kategori_user_id" required>
+                                <option value="">- Pilih kategori user -</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nrp" class="col-sm-3 col-form-label">Type</label>
+                        <div class="col-sm-9">
+                            <select class="form-control form-control-md" id="type" name="type" required>
+                                <option value="">- Pilih kategori -</option>
+                                <option value="General">General</option>
+                                <option value="Master">Master</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nrp" class="col-sm-3 col-form-label">Link</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="link_controller" name="link_controller" placeholder="Controller" required>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="link_function" name="link_function" placeholder="Function" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nrp" class="col-sm-3 col-form-label">Hidden</label>
+                        <div class="col-sm-9">
+                            <select class="form-control form-control-md" id="hidden" name="hidden" required>
+                                <option value="">- Pilih hidden -</option>
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nrp" class="col-sm-3 col-form-label">New Tab</label>
+                        <div class="col-sm-9">
+                            <select class="form-control form-control-md" id="new_tab" name="new_tab" required>
+                                <option value="">- Pilih opsi new tab -</option>
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" id="btnSave" onclick="insertData()" class="btn btn-success mr-2">Save</button>
+                    <button type="button" id="btnUpdate" onclick="updateData()" class="btn btn-success mr-2">Update</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-light">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <!-- JQuery harus dimuat terlebih dahulu -->
+    <script src="~/js/jquery.datatables.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+    <script>
+        var link = '@Url.Action("Function", "Controller")'
+        var controller_name = "@ViewBag.Controller"
+        var a
+        var dataTable
+
+        $(document).ready(function () {
+            getCredentials()
+            getAll()
+            getKategoriUser()
+        })
+
+        function btnAdd() {
+            $('#btnSave').show()
+            $('#btnUpdate').hide()
+            $('.modalBS').modal('show');
+            $('#formBS').trigger("reset")
+        }
+
+        function btnEdit(id) {
+            $('#btnSave').hide()
+            $('#btnUpdate').show()
+            $('#formBS').trigger("reset")
+            getData(id)
+            $('.modalBS').modal('show')
+        }
+
+        function getCredentials() {
+            $('#insert_by').val("@Html.Raw(ViewBag.insert_by)")
+        }
+
+        function getAll() {
+            var link = '@Url.Action("GetAll", "Menu")';
+            console.log('xxx')
+            dataTable = $("#tableBS").DataTable({
+                "order": [[1, "desc"]],
+                "ajax": {
+                    "url": link,
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "title" },
+                    {
+                        "data": function (data, type, dataToSet) {
+                            if (data.kategori_user_id == 'ADMINISTRATOR') {
+                                return '<span class="badge badge-pill badge-primary">' + data.kategori_user_id + '</span>'
+                            } else if (data.kategori_user_id == 'USER SHE') {
+                                return '<span class="badge badge-pill badge-success">' + data.kategori_user_id + '</span>'
+                            } else {
+                                return '<span class="badge badge-pill badge-warning">' + data.kategori_user_id + '</span>'
+                            }
+                        }
+                    },
+                    { "data": "type" },
+                    {
+                        "data": function (data, type, dataToSet) {
+                            return data.link_controller + '/' + data.link_function
+                        }
+                    },
+                    {
+                        "data": function (data, type, dataToSet) {
+                            if (data.hidden == 'true') {
+                                return '<span class="badge badge-pill badge-success">' + data.hidden + '</span>'
+                            } else {
+                                return '<span class="badge badge-pill badge-danger">' + data.hidden + '</span>'
+                            }
+                        }
+                    },
+                    {
+                        "data": function (data, type, dataToSet) {
+                            if (data.new_tab == 'true') {
+                                return '<span class="badge badge-pill badge-success">' + data.new_tab + '</span>'
+                            } else {
+                                return '<span class="badge badge-pill badge-danger">' + data.new_tab + '</span>'
+                            }
+                        }
+                    },
+                    {
+                        "data": "id", "render": function (data) {
+                            var a = '<button onclick="btnEdit(' + data + ')" class="btn btn-info btn-circle btn-sm">'
+                            a += '  <i class="fa fa-edit"></i>'
+                            a += '</button>'
+                            a += '<button onclick="deleteData(' + data + ')" class="btn btn-danger btn-circle btn-sm" style="margin-left: 5px;">'
+                            a += '  <i class="fa fa-trash"></i>'
+                            a += '</button>'
+                            return a
+                        },
+                        "orderable": false,
+                        "width": "180px",
+                        "searchable": false
+                    }
+                ],
+                "language": {
+                    "emptyTable": "Tidak ada data"
+                }
+            })
+            link = '@Url.Action("Function", "Controller")'
+        }
+        function getData(id) {
+            var link = '@Url.Action("Get", "KategoriUser")';
+
+            $.ajax({
+                type: "GET",
+                url: link + '/' + id,
+                success: function (data) {
+                    if (data.success) {
+                        $('#id').val(data.data.id)
+                        $('#kategori_user_id').val(data.data.kategori_user_id)
+                        $('#title').val(data.data.title)
+                        $('#type').val(data.data.type)
+                        $('#link_controller').val(data.data.link_controller)
+                        $('#link_function').val(data.data.link_function)
+                        $('#hidden').val(data.data.hidden)
+                        $('#new_tab').val(data.data.new_tab)
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Terjadi kesalahan: ' + error);
+                }
+            });
+        }
+
+        function insertData() {
+            var link = '@Url.Action("Insert", "Menu")';
+            $.ajax({
+                type: "POST",
+                url: link,
+                data: $('#formBS').serialize(),
+                success: function (data) {
+                    if (data.success) { 
+                        $('.modalBS').modal('hide');
+                        dataTable.ajax.reload();
+                        alertify.notify('Data berhasil disimpan', 'success', 5);
+                    } else {
+                        alert(data.message); 
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred: " + error);
+                }
+            });
+        }
+
+        function updateData(id) {
+            var link = '@Url.Action("Update", "Menu")';
+            $.ajax({
+                type: "POST",
+                url: link,
+                data: $('#formBS').serialize(),
+                success: function (data) {
+                    if (data.success) { 
+                        $('.modalBS').modal('hide');
+                        dataTable.ajax.reload();
+                        alertify.notify('Data berhasil diubah', 'success', 5);
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred: " + error);
+                }
+            });
+        }
+
+
+        function updateData(id) {
+            var link = '@Url.Action("Update", "Menu")';
+
+            $.ajax({
+                type: "POST",
+                url: link,
+                data: $('#formBS').serialize(),
+                success: function (data) {
+                    if (data.success) {
+                        $('.modalBS').modal('hide');
+                        dataTable.ajax.reload();
+                        alertify.notify('Data berhasil diubah', 'success', 5);
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Terjadi kesalahan: ' + error);
+                }
+            });
+        }
+
+
+        function deleteData(id) {
+            var link = '@Url.Action("Delete", "Menu")';
+
+            if (confirm('Are you sure?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: link + '/' + id,
+                    success: function (data) {
+                        if (data.success) {
+                            dataTable.ajax.reload();
+                            alertify.notify('Data berhasil dihapus', 'success', 5);
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Terjadi kesalahan: ' + error);
+                    }
+                });
+            }
+        }
+
+        function getKategoriUser() {
+            var options = $("#kategori_user_id");
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAll", "KategoriUser")',
+                success: function (data) {
+                    if (data.success) {
+                        for (var a = 0; a < data.data.length; a++) {
+                            options.append($("<option />").val(data.data[a].kategori).text(data.data[a].kategori));
+                        }
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred while fetching data: " + error);
+                }
+            });
+        }
+
+
+    </script>
+}
