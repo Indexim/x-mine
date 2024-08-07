@@ -7,14 +7,16 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace Xwatch.Controllers
+namespace X_MINE.Controllers
 {
     public class LoginController : Controller
     {
         private readonly AppDBContext _context;
         private readonly ILogger<LoginController> _logger;
+		private string controller_name = "Login";
+		private string title_name = "Login";
 
-        public LoginController(AppDBContext context, ILogger<LoginController> logger)
+		public LoginController(AppDBContext context, ILogger<LoginController> logger)
         {
             _context = context;
             _logger = logger;

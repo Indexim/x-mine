@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,71 +16,72 @@
     </button>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-white">
-            <div class="panel-heading clearfix">
-                <h4 class="panel-title">MASTER - @ViewBag.Title</h4>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table id="tableBS" class="display table" style="width: 100%; cellspacing: 0;">
-                        <thead>
-                            <tr>
-                                <th>TITLE</th>
-                                <th>KATEGORI USER</th>
-                                <th>TYPE</th>
-                                <th>LINK</th>
-                                <th>HIDDEN</th>
-                                <th>NEW TAB</th>
-                                <th>AKSI</th>
-                            </tr>
-                        </thead>
-                    </table>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-heading clearfix">
+                        <h4 class="panel-title">MASTER - @ViewBag.Title</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="tableBS" class="display table" style="width: 100%; cellspacing: 0;">
+                                <thead>
+                                    <tr>
+                                        <th>TITLE</th>
+                                        <th>KATEGORI USER</th>
+                                        <th>TYPE</th>
+                                        <th>LINK</th>
+                                        <th>HIDDEN</th>
+                                        <th>NEW TAB</th>
+                                        <th>AKSI</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <!-- Modal Add/Update -->
-<div class="modal fade modalBS" tabindex="-1">
-    <div class="modal-dialog">
+<div class="modal fade modalBS" id="modalBS" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">FORM @ViewBag.Title</h4>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
-                </button>
+                <h5 class="modal-title">FORM @ViewBag.Title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="formBS" class="forms-sample">
-                    <div class="form-group row">
-                        <label for="nrp" class="col-sm-3 col-form-label">Title</label>
+                    <div class="mb-3 row">
+                        <label for="title" class="col-sm-3 col-form-label">Title</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="title" name="title" placeholder="Masukkan title" required>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="nrp" class="col-sm-3 col-form-label">Kategori User</label>
+                    <div class="mb-3 row">
+                        <label for="kategori_user_id" class="col-sm-3 col-form-label">Kategori User</label>
                         <div class="col-sm-9">
-                            <select class="form-control form-control-md" id="kategori_user_id" name="kategori_user_id" required>
+                            <select class="form-control" id="kategori_user_id" name="kategori_user_id" required>
                                 <option value="">- Pilih kategori user -</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="nrp" class="col-sm-3 col-form-label">Type</label>
+                    <div class="mb-3 row">
+                        <label for="type" class="col-sm-3 col-form-label">Type</label>
                         <div class="col-sm-9">
-                            <select class="form-control form-control-md" id="type" name="type" required>
+                            <select class="form-control" id="type" name="type" required>
                                 <option value="">- Pilih kategori -</option>
                                 <option value="General">General</option>
                                 <option value="Master">Master</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="nrp" class="col-sm-3 col-form-label">Link</label>
+                    <div class="mb-3 row">
+                        <label for="link_controller" class="col-sm-3 col-form-label">Link</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="link_controller" name="link_controller" placeholder="Controller" required>
                         </div>
@@ -89,29 +89,31 @@
                             <input type="text" class="form-control" id="link_function" name="link_function" placeholder="Function" required>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="nrp" class="col-sm-3 col-form-label">Hidden</label>
+                    <div class="mb-3 row">
+                        <label for="hidden" class="col-sm-3 col-form-label">Hidden</label>
                         <div class="col-sm-9">
-                            <select class="form-control form-control-md" id="hidden" name="hidden" required>
+                            <select class="form-control" id="hidden" name="hidden" required>
                                 <option value="">- Pilih hidden -</option>
                                 <option value="true">True</option>
                                 <option value="false">False</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="nrp" class="col-sm-3 col-form-label">New Tab</label>
+                    <div class="mb-3 row">
+                        <label for="new_tab" class="col-sm-3 col-form-label">New Tab</label>
                         <div class="col-sm-9">
-                            <select class="form-control form-control-md" id="new_tab" name="new_tab" required>
+                            <select class="form-control" id="new_tab" name="new_tab" required>
                                 <option value="">- Pilih opsi new tab -</option>
                                 <option value="true">True</option>
                                 <option value="false">False</option>
                             </select>
                         </div>
                     </div>
-                    <button type="button" id="btnSave" onclick="insertData()" class="btn btn-success mr-2">Save</button>
-                    <button type="button" id="btnUpdate" onclick="updateData()" class="btn btn-success mr-2">Update</button>
-                    <button type="button" data-dismiss="modal" class="btn btn-light">Cancel</button>
+                    <div class="modal-footer">
+                        <button type="button" id="btnSave" onclick="insertData()" class="btn btn-primary">Save</button>
+                        <button type="button" id="btnUpdate" onclick="updateData()" class="btn btn-primary">Update</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -257,12 +259,12 @@
                 url: link,
                 data: $('#formBS').serialize(),
                 success: function (data) {
-                    if (data.success) { 
+                    if (data.success) {
                         $('.modalBS').modal('hide');
                         dataTable.ajax.reload();
                         alertify.notify('Data berhasil disimpan', 'success', 5);
                     } else {
-                        alert(data.message); 
+                        alert(data.message);
                     }
                 },
                 error: function (xhr, status, error) {
@@ -278,7 +280,7 @@
                 url: link,
                 data: $('#formBS').serialize(),
                 success: function (data) {
-                    if (data.success) { 
+                    if (data.success) {
                         $('.modalBS').modal('hide');
                         dataTable.ajax.reload();
                         alertify.notify('Data berhasil diubah', 'success', 5);

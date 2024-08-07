@@ -37,9 +37,6 @@ D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\X-MINE.MvcApplicationPartsAss
 D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\X-MINE.RazorAssemblyInfo.cache
 D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\X-MINE.RazorAssemblyInfo.cs
 D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\X-MINE.sourcelink.json
-D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\X-MINE.dll
-D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\refint\X-MINE.dll
-D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\X-MINE.pdb
 D:\4. PROJECT\2. Web\xmine\X-MINE\bin\Debug\net8.0\appsettings.Development.json
 D:\4. PROJECT\2. Web\xmine\X-MINE\bin\Debug\net8.0\appsettings.json
 D:\4. PROJECT\2. Web\xmine\X-MINE\bin\Debug\net8.0\X-MINE.staticwebassets.runtime.json
@@ -132,5 +129,8 @@ D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\scopedcss\Views\Shared\_Layou
 D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\scopedcss\bundle\X-MINE.styles.css
 D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\scopedcss\projectbundle\X-MINE.bundle.scp.css
 D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\X-MINE.csproj.Up2Date
+D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\X-MINE.dll
+D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\refint\X-MINE.dll
+D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\X-MINE.pdb
 D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\X-MINE.genruntimeconfig.cache
 D:\4. PROJECT\2. Web\xmine\X-MINE\obj\Debug\net8.0\ref\X-MINE.dll

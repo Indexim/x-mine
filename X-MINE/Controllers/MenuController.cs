@@ -7,13 +7,13 @@ using X_MINE.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Xwatch.Controllers
+namespace X_MINE.Controllers
 {
     [Authorize]
     public class MenuController : Controller
     {
         private readonly AppDBContext _context;
-        private readonly ILogger<MenuController> _logger; // Updated the type from UserController to MenuController
+        private readonly ILogger<MenuController> _logger;
         private string controller_name = "Menu";
         private string title_name = "Menu";
 
@@ -47,11 +47,6 @@ namespace Xwatch.Controllers
                         .Where(x => x.kategori_user_id == kategori_user_id)
                         .OrderBy(x => x.title)
                         .ToList();
-                    ViewBag.MenuRosterCount = _context.tbl_r_menu
-                        .Where(x => x.kategori_user_id == kategori_user_id)
-                        .Where(x => x.type == "Roster")
-                        .OrderBy(x => x.title)
-                        .Count();
                     ViewBag.MenuMasterCount = _context.tbl_r_menu
                         .Where(x => x.kategori_user_id == kategori_user_id)
                         .Where(x => x.type == "Master")

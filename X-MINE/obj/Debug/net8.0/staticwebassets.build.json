@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "a/kjsKw3F/At0Xb7m3Nm0pDK6fuAqKA2YxqTOQnE9Ic=",
+  "Hash": "/0kZ90ybqyR/09nxLi0BpyP9wE6h+kZac25Tzi70n14=",
   "Source": "X-MINE",
   "BasePath": "_content/X-MINE",
   "Mode": "Default",
@@ -14721,6 +14721,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\wwwroot\\js\\jquery.dataTables.min.js",
+      "SourceId": "X-MINE",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\wwwroot\\",
+      "BasePath": "_content/X-MINE",
+      "RelativePath": "js/jquery.dataTables.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\jquery.dataTables.min.js"
     },
     {
       "Identity": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\wwwroot\\js\\site.js",
