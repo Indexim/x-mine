@@ -6,6 +6,7 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <div style="margin-bottom: 20px;">
     <button onclick="btnAdd()" class="btn btn-primary btn-icon-split">
@@ -160,7 +161,6 @@
 
         function getAll() {
             var link = '@Url.Action("GetAll", "Menu")';
-            console.log('xxx')
             dataTable = $("#tableBS").DataTable({
                 "order": [[1, "desc"]],
                 "ajax": {
@@ -172,62 +172,50 @@
                     { "data": "title" },
                     {
                         "data": function (data, type, dataToSet) {
-                            if (data.kategori_user_id == 'ADMINISTRATOR') {
-                                return '<span class="badge badge-pill badge-primary">' + data.kategori_user_id + '</span>'
-                            } else if (data.kategori_user_id == 'USER SHE') {
-                                return '<span class="badge badge-pill badge-success">' + data.kategori_user_id + '</span>'
-                            } else {
-                                return '<span class="badge badge-pill badge-warning">' + data.kategori_user_id + '</span>'
-                            }
+                            return data.kategori_user_id;  // Simplified for testing
                         }
                     },
                     { "data": "type" },
                     {
                         "data": function (data, type, dataToSet) {
-                            return data.link_controller + '/' + data.link_function
+                            return `${data.link_controller}/${data.link_function}`;
                         }
                     },
                     {
                         "data": function (data, type, dataToSet) {
-                            if (data.hidden == 'true') {
-                                return '<span class="badge badge-pill badge-success">' + data.hidden + '</span>'
-                            } else {
-                                return '<span class="badge badge-pill badge-danger">' + data.hidden + '</span>'
-                            }
+                            return data.hidden;  // Simplified for testing
                         }
                     },
                     {
                         "data": function (data, type, dataToSet) {
-                            if (data.new_tab == 'true') {
-                                return '<span class="badge badge-pill badge-success">' + data.new_tab + '</span>'
-                            } else {
-                                return '<span class="badge badge-pill badge-danger">' + data.new_tab + '</span>'
-                            }
+                            return data.new_tab;  // Simplified for testing
                         }
                     },
                     {
-                        "data": "id", "render": function (data) {
-                            var a = '<button onclick="btnEdit(' + data + ')" class="btn btn-info btn-circle btn-sm">'
-                            a += '  <i class="fa fa-edit"></i>'
-                            a += '</button>'
-                            a += '<button onclick="deleteData(' + data + ')" class="btn btn-danger btn-circle btn-sm" style="margin-left: 5px;">'
-                            a += '  <i class="fa fa-trash"></i>'
-                            a += '</button>'
-                            return a
+                        "data": "id",
+                        "render": function (data) {
+                            return `
+                                <button onclick="btnEdit(${data})" class="btn btn-info m-1 px-5 radius-30">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button onclick="deleteData(${data})" class="btn btn-danger m-1 px-5 radius-30" style="margin-left: 5px;">
+                                    <i class="fa fa-trash"></i>
+                                </button>`;
                         },
                         "orderable": false,
-                        "width": "180px",
-                        "searchable": false
+                        "width": "180px"
                     }
                 ],
                 "language": {
                     "emptyTable": "Tidak ada data"
                 }
-            })
-            link = '@Url.Action("Function", "Controller")'
+            });
+            link = '@Url.Action("Function", "Controller")';
         }
+
+
         function getData(id) {
-            var link = '@Url.Action("Get", "KategoriUser")';
+            var link = '@Url.Action("Get", "Menu")';
 
             $.ajax({
                 type: "GET",
@@ -273,26 +261,6 @@
             });
         }
 
-        function updateData(id) {
-            var link = '@Url.Action("Update", "Menu")';
-            $.ajax({
-                type: "POST",
-                url: link,
-                data: $('#formBS').serialize(),
-                success: function (data) {
-                    if (data.success) {
-                        $('.modalBS').modal('hide');
-                        dataTable.ajax.reload();
-                        alertify.notify('Data berhasil diubah', 'success', 5);
-                    } else {
-                        alert(data.message);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    alert("An error occurred: " + error);
-                }
-            });
-        }
 
 
         function updateData(id) {

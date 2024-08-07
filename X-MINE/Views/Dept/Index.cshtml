@@ -7,6 +7,8 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <div style="margin-bottom: 20px;">
     <button onclick="btnAdd()" class="btn btn-primary btn-icon-split">
@@ -131,7 +133,7 @@
                     { "data": "departemen" },
                     {
                         "data": "id", "render": function (data) {
-                            var a = '<button onclick="btnEdit(' + data + ')" class="btn btn-info btn-circle btn-sm">'
+                            var a = '<button onclick="btnEdit(' + data + ')" class="btn btn-info m-1 px-5 radius-30">'
                             a += '  <i class="fa fa-edit"></i>'
                             a += '</button>'
                             a += '<button onclick="deleteData(' + data + ')" class="btn btn-danger btn-circle btn-sm" style="margin-left: 5px;">'
