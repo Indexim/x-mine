@@ -2545,6 +2545,10 @@
       "PackagePath": "staticwebassets\\assets\\images\\icons\\wine-glass.png"
     },
     {
+      "Id": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\wwwroot\\assets\\images\\login-images\\Batu.png",
+      "PackagePath": "staticwebassets\\assets\\images\\login-images\\Batu.png"
+    },
+    {
       "Id": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\wwwroot\\assets\\images\\login-images\\bg-forgot-password.jpg",
       "PackagePath": "staticwebassets\\assets\\images\\login-images\\bg-forgot-password.jpg"
     },
