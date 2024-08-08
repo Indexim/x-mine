@@ -26,6 +26,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\4. PROJECT\2. Web\xmine\X-MINE
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/Approval/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwcm92YWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/4. PROJECT/2. Web/xmine/X-MINE/Views/Dept/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwdFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

@@ -55,6 +55,8 @@
             </div>
             <div class="modal-body">
                 <form id="formBS" class="forms-sample">
+                    <input type="hidden" id="updateId" name="id" />
+
                     <div class="mb-3 row">
                         <label for="nik" class="col-sm-3 col-form-label">NIK</label>
                         <div class="col-sm-9">
@@ -180,7 +182,7 @@
                 url: link + '/' + id,
                 success: function (data) {
                     if (data.success) {
-                        $('#id').val(data.data.id)
+                        $('#updateId').val(data.data.id);
                         $('#nik').val(data.data.nik)
                         $('#password').val(data.data.password)
                         $('#nama').val(data.data.nama)
@@ -219,9 +221,11 @@
 
 
 
-        function updateData(id) {
-            var link = '@Url.Action("Update", "UserLogin")';
 
+        function updateData() {
+            var id = $('#updateId').val();
+            var link = '@Url.Action("Update", "UserLogin")';
+            console.log(id);
             $.ajax({
                 type: "POST",
                 url: link,

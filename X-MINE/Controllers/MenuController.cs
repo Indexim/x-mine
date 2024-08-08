@@ -135,7 +135,7 @@ namespace X_MINE.Controllers
         {
             try
             {
-                a.ip = System.Environment.MachineName;
+                //a.ip = System.Environment.MachineName;
                 //a.created_at = DateTime.Now;
                 _context.tbl_r_menu.Add(a);
                 _context.SaveChanges();
