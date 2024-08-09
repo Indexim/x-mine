@@ -1,20 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\X-MINE.csproj": {}
+    "D:\\Project\\xmine-web\\X-MINE\\X-MINE.csproj": {}
   },
   "projects": {
-    "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\X-MINE.csproj": {
-      "version": "1.0.0",
+    "D:\\Project\\xmine-web\\elFinder.NetCore\\elFinder.NetCore.csproj": {
+      "version": "1.4.0",
       "restore": {
-        "projectUniqueName": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\X-MINE.csproj",
-        "projectName": "X-MINE",
-        "projectPath": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\X-MINE.csproj",
-        "packagesPath": "C:\\Users\\lulus.hermawan\\.nuget\\packages\\",
-        "outputPath": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\obj\\",
+        "projectUniqueName": "D:\\Project\\xmine-web\\elFinder.NetCore\\elFinder.NetCore.csproj",
+        "projectName": "elFinder.NetCore",
+        "projectPath": "D:\\Project\\xmine-web\\elFinder.NetCore\\elFinder.NetCore.csproj",
+        "packagesPath": "C:\\Users\\zanur.prihatna\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\xmine-web\\elFinder.NetCore\\obj\\",
         "projectStyle": "PackageReference",
+        "crossTargeting": true,
         "configFilePaths": [
-          "C:\\Users\\lulus.hermawan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\zanur.prihatna\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,6 +30,84 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "SixLabors.ImageSharp": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Project\\xmine-web\\X-MINE\\X-MINE.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Project\\xmine-web\\X-MINE\\X-MINE.csproj",
+        "projectName": "X-MINE",
+        "projectPath": "D:\\Project\\xmine-web\\X-MINE\\X-MINE.csproj",
+        "packagesPath": "C:\\Users\\zanur.prihatna\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\xmine-web\\X-MINE\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\zanur.prihatna\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\Project\\xmine-web\\elFinder.NetCore\\elFinder.NetCore.csproj": {
+                "projectPath": "D:\\Project\\xmine-web\\elFinder.NetCore\\elFinder.NetCore.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -63,6 +142,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[8.0.4, )"
+            },
+            "elFinder.Net.Core": {
+              "target": "Package",
+              "version": "[1.5.0, )"
             }
           },
           "imports": [

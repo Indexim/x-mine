@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "File Manager";
+}
+
+<div id="elfinder"></div>
+
+@section scripts {
+    <script type="text/javascript">
+        // Documentation for client options:
+        // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
+        $(document).ready(function () {
+            var myCommands = elFinder.prototype._options.commands;
+            var disabled = ['callback', 'chmod', 'editor', 'netmount', 'ping', 'help']; // Not yet implemented commands in elFinder.NetCore
+            elFinder.prototype.i18.en.messages.TextArea = "Edit";
+            elFinder.prototype.i18.en.messages.errNewNameSelection = 'Unable to create new file with name "$1"';
+
+            $.each(disabled, function (i, cmd) {
+                (idx = $.inArray(cmd, myCommands)) !== -1 && myCommands.splice(idx, 1);
+            });
+
+            var options = {
+                baseUrl: '/lib/elfinder/',
+                url: '/el-finder/file-system/connector', // Default (Local File System)
+                @*//customData: { folder: '@Model.Folder', subFolder: '@Model.SubFolder' }, // customData passed in every request to the connector as query strings. These values are used in FileController's Index method.*@
+                rememberLastDir: false, // Prevent elFinder saving in the Browser LocalStorage the last visited directory
+                commands: myCommands,
+                /*rememberLastDir: true,*/
+                //lang: 'pt_BR', // elFinder supports UI and messages localization. Check the folder Content\elfinder\js\i18n for all available languages. Be sure to include the corresponding .js file(s) in the JavaScript bundle.
+                uiOptions: { // UI buttons available to the user
+                    toolbar: [
+                        ['back', 'forward'],
+                        ['reload'],
+                        ['home', 'up'],
+                        ['mkdir', 'mkfile', 'upload'],
+                        ['open', 'download'],
+                        ['undo', 'redo'],
+                        ['info'],
+                        ['quicklook'],
+                        ['copy', 'cut', 'paste'],
+                        ['rm'],
+                        ['duplicate', 'rename', 'edit'],
+                        ['selectall', 'selectnone', 'selectinvert'],
+                        ['view', 'sort'], ['fullscreen'],
+                        ['search']
+                    ]
+                },
+                themes: {
+                    'mt-gray'     : 'https://robinn1.github.io/elFinder-Material-Theme/manifests/gray.json',
+                        'dark-slim'   : 'https://johnfort.github.io/elFinder.themes/dark-slim/manifest.json',
+                            'mt-darkblue' : 'https://robinn1.github.io/elFinder-Material-Theme/manifests/darkblue.json',
+                                'mt-light'    : 'https://robinn1.github.io/elFinder-Material-Theme/manifests/light.json',
+                                    'bootstrap'   : 'https://nao-pon.github.io/elfinder-theme-manifests/bootstrap.json',
+                                        'moono'       : 'https://nao-pon.github.io/elfinder-theme-manifests/moono.json',
+                                            'win10'       : 'https://nao-pon.github.io/elfinder-theme-manifests/win10.json'
+                },
+                getFileCallBack: function(file, fm) {
+                    /*fm.path(file.hash, false, true).done(function (path) {
+                        // tips: path contain volume root name
+                        fm.log(path);
+                    }).fail(function () {
+                        // error handling
+                    });*/
+                    console.log("getFileCallBack:" + JSON.stringify(file))
+                },
+                handlers: {
+                    add: function(event, fm) {
+                        var files = event.data.added;
+                        
+                        var paths = [], fullPaths = [];
+                        files.forEach(function (item) {
+                            paths.push('C:\\**\\elfinder\\' + fm.path(item.hash, true) + '\\' + fm.path(item.name, true));
+                        });
+                        paths.forEach(function (p) {
+                            console.log("===> ", p.split("\\")[p.split("\\").length - 2]);
+                            let dt = p.split("\\")[p.split("\\").length - 2];
+                            fullPaths.push(dt);
+                        });
+                        console.log("paths: ", paths);
+
+                        $.ajax({
+                            url: '@Url.Action("upload", "file-manager")',
+                            type: "POST",
+                            data: { FileName: fullPaths[0], PathFile: fullPaths[0] },
+                            success: function (item) {
+                                console.log("result", item);
+                            }
+                        });
+                        /*
+                        console.log("add ", JSON.stringify(event));
+                        var hash = event.data.added[0]
+                        console.log("hash: ", hash);
+                        var encPath = hash.substr(hash.indexOf('_') + 1);
+                        var path = '/' + atob(encPath.replace(/\-/g, '+').replace(/_/g, '/').replace(/\./g, '='));
+                        console.log("convert path: ", path);
+
+
+                        fm.bind('upload', function (e) {
+                            console.log("upload: " + JSON.stringify(e));
+                        });
+                        */
+                    },
+                    remove: function(event, elfinderInstance) {
+                        console.log("remove", JSON.stringify(event));
+                        //console.log(event.data.selected); // selected files hashes list
+                    },
+                    select: function(event, elfinderInstance) {
+                        console.log("select " +JSON.stringify(event))
+                    },
+                    /*: function(file, fm) {
+                        fm.path(file.hash, false, true).done(function (path) {
+                            // tips: path contain volume root name
+                            fm.log(path);
+                        }).fail(function () {
+                            // error handling
+                        });
+                        console.log("file:" + JSON.stringify(file))
+                    },*/
+                },
+                //onlyMimes: ["image", "text/plain"] // Get files of requested mime types only
+                //lang: 'vi', // Change language
+            };
+        $('#elfinder').elfinder(options).elfinder('instance');
+    });
+    </script>
+}

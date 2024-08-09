@@ -24,6 +24,7 @@ namespace X_MINE.Data
         public DbSet<Models.tbl_r_kategori_user> tbl_r_kategori_user { get; set; }
         public DbSet<Models.tbl_r_dept> tbl_r_dept { get; set; }
         public DbSet<Models.tbl_m_user_login> tbl_m_user_login { get; set; }
+        public DbSet<Models.Dokumen> dokumens { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -52,7 +53,10 @@ namespace X_MINE.Data
                 entity.HasKey(e => e.id);
             });
 
-
+            modelBuilder.Entity<Models.Dokumen>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+            });
         }
     }
 }

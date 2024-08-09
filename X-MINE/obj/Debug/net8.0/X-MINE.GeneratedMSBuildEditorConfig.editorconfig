@@ -17,59 +17,63 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = X_MINE
 build_property.RootNamespace = X_MINE
-build_property.ProjectDir = D:\4. PROJECT\2. Web\xmine\X-MINE\
+build_property.ProjectDir = D:\Project\xmine-web\X-MINE\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\4. PROJECT\2. Web\xmine\X-MINE
+build_property.MSBuildProjectDirectory = D:\Project\xmine-web\X-MINE
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/Dept/Index.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/Dept/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwdFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/Home/Index.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/FileManager/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsZU1hbmFnZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Project/xmine-web/X-MINE/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/Home/Privacy.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/KategoriUser/Index.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/KategoriUser/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2F0ZWdvcmlVc2VyXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/Login/Index.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/Login/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/Menu/Index.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/Menu/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/Shared/Error.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/UserLogin/Index.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/UserLogin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckxvZ2luXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/_ViewImports.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/_ViewStart.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/4. PROJECT/2. Web/xmine/X-MINE/Views/Shared/_Layout.cshtml]
+[D:/Project/xmine-web/X-MINE/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-c2lkjm5wgf

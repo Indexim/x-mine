@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using X_MINE;
 using X_MINE.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,5 +58,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Login}/{action=Index}/{id?}");
+
+PathHelper.WebRootPath = app.Environment.WebRootPath;
 
 app.Run();

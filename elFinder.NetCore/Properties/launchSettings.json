@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "elFinder.NetCore": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:52895;http://localhost:52896"
+    }
+  }
+}
