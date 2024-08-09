@@ -80,6 +80,7 @@
                                 <option value="">- Pilih kategori -</option>
                                 <option value="General">General</option>
                                 <option value="Master">Master</option>
+                                <option value="MineDoc">MineDoc</option>
                             </select>
                         </div>
                     </div>
@@ -212,6 +213,12 @@
                 ],
                 "language": {
                     "emptyTable": "Tidak ada data"
+                },
+                "createdRow": function (row, data, index) {
+                    $(row).find('td').css({
+                        'font-size': '16px',
+                        'font-weight': 'bold'
+                    });
                 }
             });
             link = '@Url.Action("Function", "Controller")';

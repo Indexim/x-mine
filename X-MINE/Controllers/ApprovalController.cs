@@ -9,8 +9,8 @@ namespace X_MINE.Controllers
     {
         private readonly AppDBContext _context;
         private readonly ILogger<ApprovalController> _logger;
-        private string controller_name = "Dept";
-        private string title_name = "Dept";
+        private string controller_name = "Approval";
+        private string title_name = "Approval";
 
         [Authorize]
         public ActionResult Index()
@@ -42,9 +42,9 @@ namespace X_MINE.Controllers
                         .Where(x => x.type == "Master")
                         .OrderBy(x => x.title)
                         .Count();
-                    ViewBag.MenuTransaksiCount = _context.tbl_r_menu
+                    ViewBag.MenuMineDocCount = _context.tbl_r_menu
                         .Where(x => x.kategori_user_id == kategori_user_id)
-                        .Where(x => x.type == "Transaksi")
+                        .Where(x => x.type == "MineDoc")
                         .OrderBy(x => x.title)
                         .Count();
                     ViewBag.insert_by = HttpContext.Session.GetString("nik");
@@ -61,6 +61,21 @@ namespace X_MINE.Controllers
         {
             _context = context;
             _logger = logger;
+        }
+
+        public IActionResult GetAll()
+        {
+            try
+            {
+                var data = _context.dokumens.OrderBy(x => x.UploadTime).ToList();
+                return Json(new { data = data });
+            }
+            catch (Exception ex)
+            {
+                var innerExceptionMessage = ex.InnerException?.Message ?? ex.Message;
+                _logger.LogError(ex, "Error fetching data.");
+                return Json(new { success = false, message = $"Terjadi kesalahan saat mengambil data ${ex.Message}." });
+            }
         }
     }
 }

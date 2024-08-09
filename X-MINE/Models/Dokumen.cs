@@ -21,6 +21,12 @@ namespace X_MINE.Models
 
         [Column("upload_time")]
         public DateTime? UploadTime { get; set; }
+        [Column("asign_to")]
+        public string? Asign_to { get; set; }
+        [Column("status")]
+        public string? Status { get; set; }
+        [Column("action_time")]
+        public string? Action_time { get; set; }
 
     }
 }

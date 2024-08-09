@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-3">
+        <div class="col d-flex">
+            <div class="card radius-15 w-100">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h5 class="mb-0">Dokumen status</h5>
+                    </div>
+                    <hr />
+                    <canvas id="chart" width="40" height="40"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <!-- Ensure scripts are loaded in correct order -->
+    <script src="~/js/jquery.datatables.min.js"></script>
+    <script src="~/~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+
+    <script>
+        async function getSummary() {
+            try {
+                const response = await fetch('@Url.Action("GetAll", "Dashboard")');
+                const result = await response.json();
+
+                const data = result.data.reduce((acc, item) => {
+                    const status = item.status || 'NULL';
+                    acc[status] = (acc[status] || 0) + item.jumlah_file;
+                    return acc;
+                }, {});
+
+                const chartData = {
+                    labels: ['-', 'Approve', 'Waiting', 'On Review'],
+                    datasets: [{
+                        label: 'Jumlah File',
+                        data: [
+                            data['NULL'] || 0,
+                            data['Approve'] || 0,
+                            data['Waiting'] || 0,
+                            data['On Review'] || 0
+                        ],
+                        backgroundColor: [
+                            'rgb(128, 128, 128)',  // Gray for NULL
+                            'rgb(0, 128, 0)',      // Green for Approve
+                            'rgb(255, 165, 0)',    // Orange for Waiting
+                            'rgb(0, 0, 255)'       // Blue for Inreview
+                        ],
+                        hoverOffset: 4
+                    }]
+                };
+
+                const config = {
+                    type: 'doughnut',
+                    data: chartData,
+                };
+
+                const ctx = document.getElementById('chart').getContext('2d');
+                if (ctx) {
+                    if (window.myChart) {
+                        window.myChart.data = chartData;
+                        window.myChart.update();
+                    } else {
+                        window.myChart = new Chart(ctx, config);
+                    }
+                } else {
+                    console.error('Canvas context not found');
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        $(document).ready(function () {
+            getSummary();
+        });
+    </script>
+}

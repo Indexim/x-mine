@@ -3,10 +3,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <div style="margin-bottom: 20px;">
     <button onclick="btnAdd()" class="btn btn-primary btn-icon-split">
@@ -16,7 +18,6 @@
         <span class="text">Add Data</span>
     </button>
 </div>
-
 <div class="card">
     <div class="card-body">
         <div class="row">
@@ -46,7 +47,7 @@
     </div>
 </div>
 <!-- Modal Add/Update -->
-<div class="modal fade" id="modalBS" tabindex="-1" aria-hidden="true">
+<div class="modal fade modalBS" id="modalBS" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -56,7 +57,6 @@
             <div class="modal-body">
                 <form id="formBS" class="forms-sample">
                     <input type="hidden" id="updateId" name="id" />
-
                     <div class="mb-3 row">
                         <label for="nik" class="col-sm-3 col-form-label">NIK</label>
                         <div class="col-sm-9">
@@ -72,42 +72,47 @@
                     <div class="mb-3 row">
                         <label for="password" class="col-sm-3 col-form-label">Password</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
+                            <input type="text" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="kategori_user_id" class="col-sm-3 col-form-label">Kategori User</label>
                         <div class="col-sm-9">
-                            <select class="form-control" id="kategori_user_id" name="kategori_user_id" required>
+                            <select class="form-control form-control-md" id="kategori_user_id" name="kategori_user_id" required>
                                 <option value="">- Pilih kategori -</option>
+                                <!-- Additional options here -->
                             </select>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="dept_code" class="col-sm-3 col-form-label">Departemen</label>
                         <div class="col-sm-9">
-                            <select class="form-control" id="dept_code" name="dept_code" required>
+                            <select class="form-control form-control-md" id="dept_code" name="dept_code" required>
                                 <option value="">- Pilih dept -</option>
+                                <!-- Additional options here -->
                             </select>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" id="btnSave" onclick="insertData()" class="btn btn-primary">Save</button>
-                        <button type="button" id="btnUpdate" onclick="updateData()" class="btn btn-primary">Update</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    </div>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" onclick="insertData()" class="btn btn-primary">Save</button>
+                <button type="button" id="btnUpdate" onclick="updateData()" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
+
+
 @section scripts {
     <!-- JQuery harus dimuat terlebih dahulu -->
     <script src="~/js/jquery.datatables.min.js"></script>
-    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+
     <script>
         var link = '@Url.Action("Function", "Controller")'
         var controller_name = "@ViewBag.Controller"
@@ -115,6 +120,8 @@
         var dataTable
 
         $(document).ready(function () {
+
+            getCredentials()
             getAll()
             getKategoriUser()
             getDept()
@@ -128,7 +135,6 @@
         }
 
         function btnEdit(id) {
-            console.log(id)
             $('#btnSave').hide()
             $('#btnUpdate').show()
             $('#formBS').trigger("reset")
@@ -136,15 +142,20 @@
             $('.modalBS').modal('show')
         }
 
-
+        function getCredentials() {
+            //Getnik
+            $('#insert_by').val("@Html.Raw(ViewBag.insert_by)")
+        }
 
         function getAll() {
             var link = '@Url.Action("GetAll", "UserLogin")';
+
             dataTable = $("#tableBS").DataTable({
                 "ajax": {
                     "url": link,
                     "type": "GET",
-                    "datatype": "json"
+                    "datatype": "json",
+                    "dataSrc": "data"
                 },
                 "columns": [
                     { "data": "nik" },
@@ -156,7 +167,7 @@
                             var a = '<button onclick="btnEdit(' + data + ')" class="btn btn-info m-1 px-5 radius-30">'
                             a += '  <i class="fa fa-edit"></i>'
                             a += '</button>'
-                            a += '<button onclick="deleteData(' + data + ')" class="btn btn-danger m-1 px-5 radius-30" style="margin-left: 5px;">'
+                            a += '<button onclick="deleteData(' + data + ')" class="btn btn-danger btn-circle btn-sm" style="margin-left: 5px;">'
                             a += '  <i class="fa fa-trash"></i>'
                             a += '</button>'
                             return a
@@ -168,6 +179,12 @@
                 ],
                 "language": {
                     "emptyTable": "Tidak ada data"
+                },
+                "createdRow": function (row, data, index) {
+                    $(row).find('td').css({
+                        'font-size': '16px',
+                        'font-weight': 'bold'
+                    });
                 }
             })
             link = '@Url.Action("Function", "Controller")'
@@ -182,7 +199,7 @@
                 url: link + '/' + id,
                 success: function (data) {
                     if (data.success) {
-                        $('#updateId').val(data.data.id);
+                        $('#id').val(data.data.id)
                         $('#nik').val(data.data.nik)
                         $('#password').val(data.data.password)
                         $('#nama').val(data.data.nama)
@@ -198,8 +215,10 @@
             });
         }
 
+
         function insertData() {
             var link = '@Url.Action("Insert", "UserLogin")';
+
             $.ajax({
                 type: "POST",
                 url: link,
@@ -214,17 +233,15 @@
                     }
                 },
                 error: function (xhr, status, error) {
-                    alert("An error occurred: " + error);
+                    alert('Terjadi kesalahan: ' + error);
                 }
             });
         }
 
 
-
-
         function updateData() {
             var id = $('#updateId').val();
-            var link = '@Url.Action("Update", "UserLogin")';
+            var link = '@Url.Action("Update", "KategoriUser")';
             console.log(id);
             $.ajax({
                 type: "POST",
@@ -274,19 +291,24 @@
                 type: 'GET',
                 url: '@Url.Action("GetAll", "KategoriUser")',
                 success: function (data) {
-                    if (data.success) {
-                        for (var a = 0; a < data.data.length; a++) {
-                            options.append($("<option />").val(data.data[a].kategori).text(data.data[a].kategori));
+                    if (data.success && Array.isArray(data.data)) {
+                        options.empty();
+                        for (let i = 0; i < data.data.length; i++) {
+                            options.append($("<option />").val(data.data[i].kategori).text(data.data[i].kategori));
                         }
                     } else {
-                        alert(data.message);
+                        console.error("Format data respons tidak sesuai:", data);
+                        alert("Terjadi kesalahan saat mengambil kategori. Periksa konsol untuk detail.");
                     }
                 },
                 error: function (xhr, status, error) {
-                    alert("An error occurred while fetching data: " + error);
+                    console.error("Kesalahan AJAX:", status, error);
+                    console.error("Isi Respons:", xhr.responseText);
+                    alert("Terjadi kesalahan saat mengambil kategori. Periksa konsol untuk detail.");
                 }
             });
         }
+
 
         function getDept() {
             var options = $("#dept_code");
@@ -294,17 +316,30 @@
                 type: 'GET',
                 url: '@Url.Action("GetAll", "Dept")',
                 success: function (data) {
-                    if (data.status) {
-                        for (a = 0; a < data.data.length; a++) {
-                            options.append($("<option />").val(data.data[a].dept_code).text(data.data[a].dept_code));
+                    if (Array.isArray(data.data)) {
+                        options.empty();
+                        for (let i = 0; i < data.data.length; i++) {
+                            options.append($("<option />").val(data.data[i].dept_code).text(data.data[i].departemen));
                         }
                     } else {
-                        alert(data.data)
+                        console.error("Format data respons tidak sesuai:", data);
+                        alert("Terjadi kesalahan saat mengambil departemen. Periksa konsol untuk detail.");
                     }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Kesalahan AJAX:", status, error);
+                    console.error("Isi Respons:", xhr.responseText);
+                    alert("Terjadi kesalahan saat mengambil departemen. Periksa konsol untuk detail.");
                 }
-            })
-            link = '@Url.Action("Function", "Controller")'
+            });
         }
+
+
+
 
     </script>
 }
+
+
+
+

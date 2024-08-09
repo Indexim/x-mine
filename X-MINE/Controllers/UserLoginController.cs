@@ -46,12 +46,12 @@ namespace X_MINE.Controllers
 						.Where(x => x.type == "Master")
 						.OrderBy(x => x.title)
 						.Count();
-					ViewBag.MenuTransaksiCount = _context.tbl_r_menu
+                    ViewBag.MenuMineDocCount = _context.tbl_r_menu
 						.Where(x => x.kategori_user_id == kategori_user_id)
-						.Where(x => x.type == "Transaksi")
+						.Where(x => x.type == "MineDoc")
 						.OrderBy(x => x.title)
 						.Count();
-					ViewBag.insert_by = HttpContext.Session.GetString("nik");
+                    ViewBag.insert_by = HttpContext.Session.GetString("nik");
 					ViewBag.departemen = HttpContext.Session.GetString("dept_code");
 					return View();
 				}
