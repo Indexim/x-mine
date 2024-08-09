@@ -1,18 +1,19 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project\\xmine-web\\X-MINE\\X-MINE.csproj": {}
+    "D:\\Project\\xmine-web\\elFinder.NetCore\\elFinder.NetCore.csproj": {}
   },
   "projects": {
-    "D:\\Project\\xmine-web\\X-MINE\\X-MINE.csproj": {
-      "version": "1.0.0",
+    "D:\\Project\\xmine-web\\elFinder.NetCore\\elFinder.NetCore.csproj": {
+      "version": "1.4.0",
       "restore": {
-        "projectUniqueName": "D:\\Project\\xmine-web\\X-MINE\\X-MINE.csproj",
-        "projectName": "X-MINE",
-        "projectPath": "D:\\Project\\xmine-web\\X-MINE\\X-MINE.csproj",
+        "projectUniqueName": "D:\\Project\\xmine-web\\elFinder.NetCore\\elFinder.NetCore.csproj",
+        "projectName": "elFinder.NetCore",
+        "projectPath": "D:\\Project\\xmine-web\\elFinder.NetCore\\elFinder.NetCore.csproj",
         "packagesPath": "C:\\Users\\zanur.prihatna\\.nuget\\packages\\",
-        "outputPath": "D:\\Project\\xmine-web\\X-MINE\\obj\\",
+        "outputPath": "D:\\Project\\xmine-web\\elFinder.NetCore\\obj\\",
         "projectStyle": "PackageReference",
+        "crossTargeting": true,
         "configFilePaths": [
           "C:\\Users\\zanur.prihatna\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -46,23 +47,13 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
+            "SixLabors.ImageSharp": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[3.1.3, )"
             },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
+            "System.Text.Json": {
               "target": "Package",
-              "version": "[8.0.7, )"
-            },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[8.0.3, )"
-            },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
-              "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.1, )"
             }
           },
           "imports": [

@@ -6382,19 +6382,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lulus.hermawan\\.nuget\\packages\\": {}
+    "C:\\Users\\zanur.prihatna\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\X-MINE.csproj",
+      "projectUniqueName": "D:\\Project\\xmine-web\\X-MINE\\X-MINE.csproj",
       "projectName": "X-MINE",
-      "projectPath": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\X-MINE.csproj",
-      "packagesPath": "C:\\Users\\lulus.hermawan\\.nuget\\packages\\",
-      "outputPath": "D:\\4. PROJECT\\2. Web\\xmine\\X-MINE\\obj\\",
+      "projectPath": "D:\\Project\\xmine-web\\X-MINE\\X-MINE.csproj",
+      "packagesPath": "C:\\Users\\zanur.prihatna\\.nuget\\packages\\",
+      "outputPath": "D:\\Project\\xmine-web\\X-MINE\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\lulus.hermawan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\zanur.prihatna\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
