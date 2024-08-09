@@ -22,5 +22,8 @@ namespace X_MINE.Models
         [Column("upload_time")]
         public DateTime? UploadTime { get; set; }
 
+        [Column("path_hash")]
+        public String? PathHash { get; set; }
+
     }
 }

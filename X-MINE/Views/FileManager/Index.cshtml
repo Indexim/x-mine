@@ -64,47 +64,81 @@
                 },
                 handlers: {
                     add: function(event, fm) {
-                        var files = event.data.added;
-                        
-                        var paths = [], fullPaths = [];
+                        let paths = [];
+                        let params = [];
+                        let hash = [];
+                        let i = 0;
+                        let files = event.data.added;
+                        console.log("proses add: ", files);
                         files.forEach(function (item) {
-                            paths.push('C:\\**\\elfinder\\' + fm.path(item.hash, true) + '\\' + fm.path(item.name, true));
+                            if (item.mime != 'directory') {
+                                paths.push('C:\\**\\elfinder\\' + fm.path(item.hash, true) + '\\' + fm.path(item.name, true));
+                                hash.push(item.hash);
+                            }
+                            
                         });
                         paths.forEach(function (p) {
-                            console.log("===> ", p.split("\\")[p.split("\\").length - 2]);
-                            let dt = p.split("\\")[p.split("\\").length - 2];
-                            fullPaths.push(dt);
+                            //console.log("===> ", p.split("\\")[p.split("\\").length - 2]);
+                            let fullpath = p.split("\\")[p.split("\\").length - 2];
+                            let filename = fullpath.split('/')[fullpath.split('/').length - 1]
+                            console.log("upload file: ", filename);
+                            params.push({ 'FileName': filename, 'PathFile': fullpath, 'PathHash': '', PathHash: hash[i] });
+                            i++;
                         });
-                        console.log("paths: ", paths);
-
-                        $.ajax({
-                            url: '@Url.Action("upload", "file-manager")',
-                            type: "POST",
-                            data: { FileName: fullPaths[0], PathFile: fullPaths[0] },
-                            success: function (item) {
-                                console.log("result", item);
-                            }
-                        });
+                    
+                        console.log("params: ", params);
+                        if (params.length > 0) {
+                            $.ajax({
+                                url: '@Url.Action("upload", "file-manager")',
+                                dataType: 'json',
+                                type: "POST",
+                                data: JSON.stringify(params),
+                                contentType: "application/json; charset=utf-8",
+                                success: function (item) {
+                                    console.log("result", item);
+                                }
+                            });
+                        }
+                        
+                        
                         /*
                         console.log("add ", JSON.stringify(event));
                         var hash = event.data.added[0]
                         console.log("hash: ", hash);
                         var encPath = hash.substr(hash.indexOf('_') + 1);
                         var path = '/' + atob(encPath.replace(/\-/g, '+').replace(/_/g, '/').replace(/\./g, '='));
-                        console.log("convert path: ", path);
-
-
-                        fm.bind('upload', function (e) {
-                            console.log("upload: " + JSON.stringify(e));
-                        });
+                            console.log("convert path: ", path);
                         */
+                        /*
+                        
+                            fm.bind('upload', function (e) {
+                                // console.log("upload: " + JSON.stringify(e));
+                            
+                                $.post('@Url.Action("upload", "file-manager")', JSON.stringify({ 'FileName': fullPaths[0], 'PathFile': fullPaths[0] }), function (res) {
+                                    console.log("result", res);
+                                });
+                            });
+                        */
+                        
                     },
                     remove: function(event, elfinderInstance) {
-                        console.log("remove", JSON.stringify(event));
+                        console.log("remove", JSON.stringify(event.data.removed));
                         //console.log(event.data.selected); // selected files hashes list
+                        let params = JSON.stringify(event.data.removed);
+                        console.log("params: ", JSON.stringify(params));
+                        $.ajax({
+                            url: '@Url.Action("delete", "file-manager")',
+                            dataType: 'json',
+                            type: "POST",
+                            data: params,
+                            contentType: "application/json; charset=utf-8",
+                            success: function (item) {
+                                console.log("result", item);
+                            }
+                        });
                     },
                     select: function(event, elfinderInstance) {
-                        console.log("select " +JSON.stringify(event))
+                        console.log("select " + JSON.stringify(event));
                     },
                     /*: function(file, fm) {
                         fm.path(file.hash, false, true).done(function (path) {

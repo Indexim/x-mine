@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Reflection.Metadata;
 using X_MINE.Data;
 using X_MINE.Models;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace X_MINE.Controllers
 {
@@ -65,47 +68,65 @@ namespace X_MINE.Controllers
         }
 
         [HttpPost("upload")]
-        public IActionResult uploadFile(Dokumen paramUploads) {
+        public IActionResult uploadFile([FromBody] List<ParamUpload> paramUploads) {
             try
             {
+                Console.WriteLine($"{paramUploads.Count} - paramUploads: {paramUploads}");
                 if (paramUploads != null)
                 {
-                    /*paramUploads.ForEach(x => {
+                    paramUploads.ForEach(x =>
+                    {
                         string ids = DateTime.Now.Ticks.ToString();
                         string fileName = x.FileName;
-                        string filePath = x.FilePath;
+                        string filePath = x.PathFile;
                         Dokumen dokumen = new Dokumen();
                         dokumen.Id = ids;
-                        dokumen.FileName = fileName;
-                        dokumen.PathFile = filePath;
-                        dokumen.UploadTime = DateTime.Now;
-                        dokumen.UploadBy = "";
+                        dokumen.FileName = x.FileName;
+                        dokumen.PathFile = x.PathFile;
+                        dokumen.UploadTime = DateTime.UtcNow;
+                        dokumen.UploadBy = HttpContext.Session.GetString("nik");
+                        dokumen.PathHash = x.PathHash;
 
                         _context.dokumens.Add(dokumen);
-                        _context.SaveChangesAsync();
-                    });*/
-                    string ids = DateTime.Now.Ticks.ToString();
-                    /*string fileName = paramUploads.FileName;
-                    string filePath = paramUploads.FilePath;
-                    Dokumen dokumen = new Dokumen();
-                    dokumen.Id = ids;
-                    dokumen.FileName = fileName;
-                    dokumen.PathFile = filePath;
-                    dokumen.UploadTime = DateTime.Now;
-                    dokumen.UploadBy = "";*/
-                    paramUploads.Id = ids;
-
-                    _context.dokumens.Add(paramUploads);
-                    _context.SaveChanges();
-
+                        _context.SaveChanges();
+                    });
                 }
-                return Ok();
+                return Ok(new { success = true, message = "Data telah diupload" });
             }
             catch (Exception ex)
             {
-                return BadRequest($"error: {ex}");
+                return BadRequest(new { success = false, message = $"error: {ex}" });
             }
-            
+        }
+
+        [HttpPost("delete")]
+        public async Task<IActionResult> deleteFile([FromBody] List<String> param)
+        {
+            try
+            {
+                List<Dokumen> dokumens = new List<Dokumen>();;
+                if (param != null)
+                {
+                    foreach (var x in param)
+                    {
+                        Dokumen dokumen = await _context.dokumens.FirstOrDefaultAsync(o => o.PathHash == x);
+                        if (dokumen != null) { 
+                            dokumens.Add(dokumen);
+                        }
+                    }
+                    if(dokumens.Count > 0)
+                    {
+                        _context.RemoveRange(dokumens);
+                        _context.SaveChanges();
+                    }
+
+                }
+                return Ok(new { success = true, message = "Data telah dihapus" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = $"error: {ex}" });
+            }
         }
     }
 }
