@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<div style="margin-bottom: 20px;">
+    <button onclick="btnAdd()" class="btn btn-primary btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fa fa-plus"></i>
+        </span>
+        <span class="text">Add Data</span>
+    </button>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-heading clearfix">
+                        <h4 class="panel-title">MASTER - @ViewBag.Title</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="tableBS" class="display table" style="width: 100%; cellspacing: 0;">
+                                <thead>
+                                    <tr>
+                                        <th>NAMA</th>
+                                        <th>LOKASI</th>
+                                        <th>UPLOAD BY</th>
+                                        <th>DATETIME</th>
+                                        <th>STATUS</th>
+                                        <th>AKSI</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <!-- JQuery harus dimuat terlebih dahulu -->
+    <script src="~/js/jquery.datatables.min.js"></script>
+    <script src="~/~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+
+    <script>
+        var link = '@Url.Action("Function", "Controller")'
+        var controller_name = "@ViewBag.Controller"
+        var a
+        var dataTable
+
+        $(document).ready(function () {
+
+            getCredentials()
+            getAll()
+        })
+
+        function btnAdd() {
+            $('#btnSave').show()
+            $('#btnUpdate').hide()
+            $('.modalBS').modal('show');
+            $('#formBS').trigger("reset")
+        }
+
+        function getCredentials() {
+            //GetNRP
+            $('#insert_by').val("@Html.Raw(ViewBag.insert_by)")
+        }
+
+        function getAll() {
+            var link = '@Url.Action("GetAll", "Dept")';
+
+            dataTable = $("#tableBS").DataTable({
+                "ajax": {
+                    "url": link,
+                    "type": "GET",
+                    "datatype": "json",
+                    "dataSrc": "data"
+                },
+                "columns": [
+                    { "data": "dept_code" },
+                    { "data": "departemen" },
+                    {
+                        "data": "id", "render": function (data) {
+                            var a = '<button onclick="btnEdit(' + data + ')" class="btn btn-info m-1 px-5 radius-30">'
+                            a += '  <i class="fa fa-edit"></i>'
+                            a += '</button>'
+                            a += '<button onclick="deleteData(' + data + ')" class="btn btn-danger btn-circle btn-sm" style="margin-left: 5px;">'
+                            a += '  <i class="fa fa-trash"></i>'
+                            a += '</button>'
+                            return a
+                        },
+                        "orderable": false,
+                        "width": "180px",
+                        "searchable": false
+                    }
+                ],
+                "language": {
+                    "emptyTable": "Tidak ada data"
+                }
+            })
+            link = '@Url.Action("Function", "Controller")'
+        }
+
+
+        function getData(id) {
+            var link = '@Url.Action("Get", "Dept")';
+
+            $.ajax({
+                type: "GET",
+                url: link + '/' + id,
+                success: function (data) {
+                    if (data.success) {
+                        $('#id').val(data.data.id)
+                        $('#dept_code').val(data.data.dept_code)
+                        $('#departemen').val(data.data.departemen)
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Terjadi kesalahan: ' + error);
+                }
+            });
+        }
+    </script>
+}
+
+
+
+

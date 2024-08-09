@@ -55,6 +55,7 @@
             </div>
             <div class="modal-body">
                 <form id="formBS" class="forms-sample">
+                    <input type="hidden" id="updateId" name="id" />
                     <div class="mb-3 row">
                         <label for="kategori" class="col-sm-3 col-form-label">Kategori</label>
                         <div class="col-sm-9">
@@ -167,7 +168,7 @@
                 url: link + '/' + id,
                 success: function (data) {
                     if (data.success) {
-                        $('#id').val(data.data.id);
+                        $('#updateId').val(data.data.id);
                         $('#kategori').val(data.data.kategori);
                         $('#login_controller').val(data.data.login_controller);
                         $('#login_function').val(data.data.login_function);
@@ -205,9 +206,10 @@
         }
 
 
-        function updateData(id) {
+        function updateData() {
+            var id = $('#updateId').val();
             var link = '@Url.Action("Update", "KategoriUser")';
-
+            console.log(id);
             $.ajax({
                 type: "POST",
                 url: link,
@@ -226,6 +228,7 @@
                 }
             });
         }
+
 
 
         function deleteData(id) {
