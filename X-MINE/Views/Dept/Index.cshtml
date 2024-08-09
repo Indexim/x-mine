@@ -46,6 +46,7 @@
 </div>
 
 <!-- Modal Add/Update -->
+<!-- Modal Add/Update -->
 <div class="modal fade modalBS" id="modalBS" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -55,24 +56,26 @@
             </div>
             <div class="modal-body">
                 <form id="formBS" class="forms-sample">
+                    <input type="hidden" id="updateId" name="id" />
                     <div class="mb-3 row">
-                        <label for="dept_code" class="col-sm-3 col-form-label">Dept Code</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="dept_code" name="dept_code" placeholder="Masukkan dept code" required>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="departemen" class="col-sm-3 col-form-label">Departemen</label>
+                        <label for="nama" class="col-sm-3 col-form-label">departemen</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="departemen" name="departemen" placeholder="Masukkan departemen" required>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" id="btnSave" onclick="insertData()" class="btn btn-primary">Save</button>
-                        <button type="button" id="btnUpdate" onclick="updateData()" class="btn btn-primary">Update</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <div class="mb-3 row">
+                        <label for="nama" class="col-sm-3 col-form-label">dept code</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="dept_code" name="dept_code" placeholder="Masukkan dept_code" required>
+                        </div>
                     </div>
+
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" onclick="insertData()" class="btn btn-primary">Save</button>
+                <button type="button" id="btnUpdate" onclick="updateData()" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -148,6 +151,12 @@
                 ],
                 "language": {
                     "emptyTable": "Tidak ada data"
+                },
+                                "createdRow": function (row, data, index) {
+                    $(row).find('td').css({
+                        'font-size': '16px',
+                        'font-weight': 'bold'
+                    });
                 }
             })
             link = '@Url.Action("Function", "Controller")'
@@ -199,9 +208,10 @@
         }
 
 
-        function updateData(id) {
+        function updateData() {
+            var id = $('#updateId').val();
             var link = '@Url.Action("Update", "Dept")';
-
+            console.log(id);
             $.ajax({
                 type: "POST",
                 url: link,

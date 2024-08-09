@@ -10,21 +10,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
+
+<style>
+    .btn-biru {
+        background-color: #007bff; 
+        color: #ffffff;
+    }
+
+    .btn-kuning {
+        background-color: #ffc107; 
+        color: #000000; 
+    }
+
+    .btn-hijau {
+        background-color: #28a745; 
+        color: #ffffff; 
+    }
+</style>
 <div style="margin-bottom: 20px;">
-    <button onclick="btnAdd()" class="btn btn-primary btn-icon-split">
+    <button onclick="window.location.href='@Url.Action("Index", "FileManager")'" class="btn btn-primary btn-icon-split">
         <span class="icon text-white-50">
             <i class="fa fa-plus"></i>
         </span>
         <span class="text">Add Data</span>
     </button>
 </div>
+
+
 <div class="card">
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-white">
                     <div class="panel-heading clearfix">
-                        <h4 class="panel-title">MASTER - @ViewBag.Title</h4>
+                        <h4 class="panel-title">APROVAL - @ViewBag.Title</h4>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -81,7 +100,7 @@
         }
 
         function getAll() {
-            var link = '@Url.Action("GetAll", "Dept")';
+            var link = '@Url.Action("GetAll", "Approval")';
 
             dataTable = $("#tableBS").DataTable({
                 "ajax": {
@@ -91,17 +110,44 @@
                     "dataSrc": "data"
                 },
                 "columns": [
-                    { "data": "dept_code" },
-                    { "data": "departemen" },
+                    { "data": "fileName" },
+                    { "data": "pathFile" },
+                    { "data": "uploadBy" },
+                    { "data": "uploadTime" },
                     {
-                        "data": "id", "render": function (data) {
-                            var a = '<button onclick="btnEdit(' + data + ')" class="btn btn-info m-1 px-5 radius-30">'
-                            a += '  <i class="fa fa-edit"></i>'
-                            a += '</button>'
-                            a += '<button onclick="deleteData(' + data + ')" class="btn btn-danger btn-circle btn-sm" style="margin-left: 5px;">'
-                            a += '  <i class="fa fa-trash"></i>'
-                            a += '</button>'
-                            return a
+                        "data": "status",
+                        "render": function (data) {
+                            var buttonClass = '';
+
+                            // Tentukan kelas berdasarkan nilai status
+                            switch (data) {
+                                case 'Waiting':
+                                    buttonClass = 'btn btn-biru';
+                                    break;
+                                case 'Inreview':
+                                    buttonClass = 'btn btn-kuning';
+                                    break;
+                                case 'Approve':
+                                    buttonClass = 'btn btn-hijau';
+                                    break;
+                                default:
+                                    buttonClass = 'btn btn-default'; // Kelas default jika status tidak sesuai
+                                    break;
+                            }
+
+                            // Kembalikan HTML untuk tombol dengan kelas yang sesuai
+                            return '<button class="' + buttonClass + ' m-1 px-5 radius-30">' + data + '</button>';
+                        },
+                        "orderable": false,
+                        "searchable": false
+                    },
+                    {
+                        "data": "id",
+                        "render": function (data) {
+                            var editButton = '<button onclick="btnEdit(' + data + ')" class="btn btn-dark m-1 px-5 radius-30">' +
+                                '  <i class="fa fa-check"></i>' +
+                                '</button>';
+                            return editButton;
                         },
                         "orderable": false,
                         "width": "180px",
@@ -110,9 +156,14 @@
                 ],
                 "language": {
                     "emptyTable": "Tidak ada data"
+                },
+                "createdRow": function (row, data, index) {
+                    $(row).find('td').css({
+                        'font-size': '16px',
+                        'font-weight': 'bold'
+                    });
                 }
-            })
-            link = '@Url.Action("Function", "Controller")'
+            });
         }
 
 

@@ -51,9 +51,9 @@ namespace X_MINE.Controllers
                         .Where(x => x.type == "Master")
                         .OrderBy(x => x.title)
                         .Count();
-                    ViewBag.MenuTransaksiCount = _context.tbl_r_menu
+                    ViewBag.MenuMineDocCount = _context.tbl_r_menu
                         .Where(x => x.kategori_user_id == kategori_user_id)
-                        .Where(x => x.type == "Transaksi")
+                        .Where(x => x.type == "MineDoc")
                         .OrderBy(x => x.title)
                         .Count();
                     ViewBag.insert_by = HttpContext.Session.GetString("nik");
@@ -86,6 +86,7 @@ namespace X_MINE.Controllers
                         dokumen.UploadTime = DateTime.UtcNow;
                         dokumen.UploadBy = HttpContext.Session.GetString("nik");
                         dokumen.PathHash = x.PathHash;
+                        dokumen.Status = "WAITING";
 
                         _context.dokumens.Add(dokumen);
                         _context.SaveChanges();
@@ -128,5 +129,7 @@ namespace X_MINE.Controllers
                 return BadRequest(new { success = false, message = $"error: {ex}" });
             }
         }
+
+
     }
 }

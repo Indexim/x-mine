@@ -4,13 +4,12 @@ using X_MINE.Data;
 
 namespace X_MINE.Controllers
 {
-
-    public class ApprovalController : Controller
+    public class DashboardController : Controller
     {
         private readonly AppDBContext _context;
-        private readonly ILogger<ApprovalController> _logger;
-        private string controller_name = "Approval";
-        private string title_name = "Approval";
+        private readonly ILogger<DashboardController> _logger;
+        private string controller_name = "Dashboard";
+        private string title_name = "Dashboard";
 
         [Authorize]
         public ActionResult Index()
@@ -32,7 +31,6 @@ namespace X_MINE.Controllers
                 {
                     ViewBag.Title = title_name;
                     ViewBag.Controller = controller_name;
-                    // ViewBag.Setting = _context.tbl_m_setting_aplikasi.FirstOrDefault();
                     ViewBag.Menu = _context.tbl_r_menu
                         .Where(x => x.kategori_user_id == kategori_user_id)
                         .OrderBy(x => x.title)
@@ -57,7 +55,7 @@ namespace X_MINE.Controllers
                 }
             }
         }
-        public ApprovalController(AppDBContext context, ILogger<ApprovalController> logger)
+        public DashboardController(AppDBContext context, ILogger<DashboardController> logger)
         {
             _context = context;
             _logger = logger;
@@ -67,15 +65,16 @@ namespace X_MINE.Controllers
         {
             try
             {
-                var data = _context.dokumens.OrderBy(x => x.UploadTime).ToList();
+                var data = _context.vw_summary_dokumen.OrderBy(x => x.status).ToList();
                 return Json(new { data = data });
             }
             catch (Exception ex)
             {
                 var innerExceptionMessage = ex.InnerException?.Message ?? ex.Message;
                 _logger.LogError(ex, "Error fetching data.");
-                return Json(new { success = false, message = $"Terjadi kesalahan saat mengambil data ${ex.Message}." });
+                return Json(new { success = false, message = $"Terjadi kesalahan saat mengambil data: {innerExceptionMessage}." });
             }
         }
+
     }
 }
